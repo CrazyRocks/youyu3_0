@@ -264,12 +264,30 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel:4006565456"]];
 }
 
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    flowPoint = CGPointMake(oriPoint.x, oriPoint.y - 245);
+    
+    [UIView beginAnimations:@"showBoard" context:nil];
+    [UIView setAnimationDuration:0.2f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    self.view.center = flowPoint;
+    [self.view layoutIfNeeded];
+    [UIView commitAnimations];
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    [UIView animateWithDuration:0.2f animations:^{
+        self.view.center = oriPoint;
+        [self.view layoutIfNeeded];
+    }];
+}
+
 #pragma mark keyboard event
 - (void)handleKeyboardDidShow:(NSNotification*)paramNotification
 {
     //获取键盘高度
    
-    NSValue *keyboardRectAsObject=[[paramNotification userInfo]objectForKey:UIKeyboardFrameEndUserInfoKey];
+    /*NSValue *keyboardRectAsObject=[[paramNotification userInfo]objectForKey:UIKeyboardFrameEndUserInfoKey];
     
     CGRect keyboardRect;
     [keyboardRectAsObject getValue:&keyboardRect];
@@ -278,29 +296,22 @@
     flowPoint = CGPointMake(oriPoint.x, oriPoint.y - constraint);
     NSLog(@"\r\n offset:%f,constraint:%f,%f,%f", offset, constraint, bottomConst.constant, topConst.constant);
     
-    /*[UIView animateWithDuration:0.2 animations:^{
-        self.view.center = flowPoint;
-        [self.view layoutIfNeeded];
-    }];*/
     
     [UIView beginAnimations:@"showBoard" context:nil];
     [UIView setAnimationDuration:0.1f];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     self.view.center = flowPoint;
     [self.view layoutIfNeeded];
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
 }
 
 - (void)handleKeyboardDidHidden
 {
-    NSLog(@"\r\n hide point:%f", self.view.center.y);
+    /*NSLog(@"\r\n hide point:%f", self.view.center.y);
     
-    //self.view.frame = CGRectOffset(self.view.frame, 0, 0);
-    /*bottomConst.constant = 0;
-    topConst.constant = 0;*/
     [UIView animateWithDuration:0.2 animations:^{
         self.view.center = oriPoint;
         [self.view layoutIfNeeded];
-    }];
+    }];*/
 }
 @end
